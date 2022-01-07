@@ -1,5 +1,6 @@
 package br.com.emendes.modelo;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,16 +13,15 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String nome;
-	private String cpf;
+	
+	@Embedded
+	private DadosPessoais dadosPessoais;
 
 	public Cliente() {
 	}
-
+	
 	public Cliente(String nome, String cpf) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
+		this.dadosPessoais = new DadosPessoais(nome, cpf);
 	}
 
 	public long getId() {
@@ -32,20 +32,16 @@ public class Cliente {
 		this.id = id;
 	}
 
+	public DadosPessoais getDadosPessoais() {
+		return dadosPessoais;
+	}
+	
 	public String getNome() {
-		return nome;
+		return this.dadosPessoais.getNome();
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
+	
 	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		return this.dadosPessoais.getCpf();
 	}
 
 }
